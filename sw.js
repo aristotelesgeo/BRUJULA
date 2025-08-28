@@ -65,6 +65,12 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+// AGREGAR ESTA VALIDACIÓN:
+  // Skip chrome-extension and other non-http requests
+  if (!event.request.url.startsWith('http')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
