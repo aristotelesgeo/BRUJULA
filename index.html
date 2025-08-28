@@ -105,10 +105,10 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
         }
 
-        .north { top: 10px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; }
-        .south { bottom: 10px; left: 50%; transform: translateX(-50%); }
-        .east { right: 15px; top: 50%; transform: translateY(-50%); }
-        .west { left: 15px; top: 50%; transform: translateY(-50%); }
+        .north { top: 25px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; }
+        .south { bottom: 25px; left: 50%; transform: translateX(-50%); }
+        .east { right: 30px; top: 50%; transform: translateY(-50%); }
+        .west { left: 30px; top: 50%; transform: translateY(-50%); }
 
         .needle {
             position: absolute;
@@ -244,7 +244,7 @@
 
         .major-mark {
             width: 3px;
-            height: 25px;
+            height: 30px;
             top: 5px;
             left: 50%;
             margin-left: -1.5px;
@@ -252,11 +252,20 @@
 
         .minor-mark {
             width: 2px;
-            height: 15px;
+            height: 20px;
             top: 10px;
             left: 50%;
             margin-left: -1px;
             background: rgba(255,215,0,0.4);
+        }
+
+        .degree-number {
+            position: absolute;
+            color: #ffd700;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+            transform-origin: center;
         }
 
         @media (max-width: 480px) {
@@ -416,6 +425,25 @@
                     mark.className = angle % 30 === 0 ? 'mark major-mark' : 'mark minor-mark';
                     mark.style.transform = `rotate(${angle}deg)`;
                     marksContainer.appendChild(mark);
+                    
+                    // Add degree numbers every 30 degrees
+                    if (angle % 30 === 0 && angle !== 0 && angle !== 90 && angle !== 180 && angle !== 270) {
+                        const degreeNumber = document.createElement('div');
+                        degreeNumber.className = 'degree-number';
+                        degreeNumber.textContent = angle;
+                        
+                        // Position numbers around the circle
+                        const radius = 110; // Distance from center
+                        const radian = (angle - 90) * (Math.PI / 180); // Convert to radians, -90 to start from top
+                        const x = Math.cos(radian) * radius + 130; // 130 is half of compass width
+                        const y = Math.sin(radian) * radius + 130; // 130 is half of compass height
+                        
+                        degreeNumber.style.left = `${x}px`;
+                        degreeNumber.style.top = `${y}px`;
+                        degreeNumber.style.transform = 'translate(-50%, -50%)';
+                        
+                        marksContainer.appendChild(degreeNumber);
+                    }
                 }
             }
 
@@ -470,11 +498,14 @@
                 let heading = 0;
                 
                 if (event.webkitCompassHeading !== undefined) {
-                    // iOS
+                    // iOS - webkitCompassHeading gives degrees from North
                     heading = event.webkitCompassHeading;
                 } else if (event.alpha !== null) {
-                    // Android and others
-                    heading = 360 - event.alpha;
+                    // Android and others - alpha gives degrees from North
+                    // Some devices need inversion, but let's try direct first
+                    heading = event.alpha;
+                    // If readings seem inverted, uncomment the line below:
+                    // heading = 360 - event.alpha;
                 }
 
                 // Apply calibration
@@ -578,8 +609,9 @@
             }
 
             calibrateCompass() {
+                // Reset calibration and set current reading as North reference
                 this.calibrationOffset = -this.currentHeading;
-                this.showStatus('Compass calibrated', 'success');
+                this.showStatus('Compass calibrated - Point phone toward North for best accuracy', 'success');
                 
                 // Visual calibration effect
                 this.compass.style.transform = 'scale(1.1)';
