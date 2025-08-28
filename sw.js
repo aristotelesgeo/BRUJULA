@@ -13,7 +13,7 @@ const urlsToCache = [
   '/BRUJULA/icon-512x512.png',
   '/BRUJULA/screenshot-phone.png'
 ];
-
+const CACHE_NAME = 'compass-digital-v1.5.0'; // Cambia a nueva versión
 // Install service worker immediately
 self.addEventListener('install', (event) => {
   console.log('[SW] Installing Service Worker...');
