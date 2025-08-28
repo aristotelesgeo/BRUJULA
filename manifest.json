@@ -1,76 +1,76 @@
 {
-  "id": "/brujula-digital",
+  "id": "/BRUJULA/",
   "name": "Brújula Digital",
   "short_name": "Brújula",
   "description": "Brújula digital con linterna integrada para dispositivos móviles. Navegación precisa y herramientas útiles para outdoor.",
-  "start_url": "/",
+  "start_url": "/BRUJULA/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
   "background_color": "#1a1a2e",
   "theme_color": "#1a1a2e",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "/BRUJULA/",
   "lang": "es",
   "dir": "ltr",
   "categories": ["navigation", "utilities", "travel", "sports"],
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon-72x72.png",
+      "src": "/BRUJULA/icon-72x72.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-96x96.png",
+      "src": "/BRUJULA/icon-96x96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-128x128.png",
+      "src": "/BRUJULA/icon-128x128.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-144x144.png",
+      "src": "/BRUJULA/icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-152x152.png",
+      "src": "/BRUJULA/icon-152x152.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-192x192.png",
+      "src": "/BRUJULA/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-192x192.png",
+      "src": "/BRUJULA/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icon-384x384.png",
+      "src": "/BRUJULA/icon-384x384.png",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512x512.png",
+      "src": "/BRUJULA/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512x512.png",
+      "src": "/BRUJULA/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -78,7 +78,7 @@
   ],
   "screenshots": [
     {
-      "src": "screenshot-phone.png",
+      "src": "/BRUJULA/screenshot-phone.png",
       "sizes": "540x720",
       "type": "image/png",
       "form_factor": "narrow"
@@ -89,10 +89,10 @@
       "name": "Abrir Brújula",
       "short_name": "Brújula",
       "description": "Abrir la brújula directamente",
-      "url": "/",
+      "url": "/BRUJULA/",
       "icons": [
         {
-          "src": "icon-192x192.png",
+          "src": "/BRUJULA/icon-192x192.png",
           "sizes": "192x192"
         }
       ]
@@ -101,10 +101,10 @@
       "name": "Linterna Rápida",
       "short_name": "Linterna",
       "description": "Activar linterna rápidamente",
-      "url": "/?flashlight=on",
+      "url": "/BRUJULA/?flashlight=on",
       "icons": [
         {
-          "src": "icon-192x192.png",
+          "src": "/BRUJULA/icon-192x192.png",
           "sizes": "192x192"
         }
       ]
@@ -114,7 +114,7 @@
     "client_mode": "navigate-existing"
   },
   "share_target": {
-    "action": "/share-location",
+    "action": "/BRUJULA/share-location",
     "method": "GET",
     "params": {
       "text": "location"
@@ -125,7 +125,7 @@
   },
   "file_handlers": [
     {
-      "action": "/open-gpx",
+      "action": "/BRUJULA/open-gpx",
       "accept": {
         "application/gpx+xml": [".gpx"]
       }
@@ -135,7 +135,7 @@
   "protocol_handlers": [
     {
       "protocol": "geo",
-      "url": "/location?coords=%s"
+      "url": "/BRUJULA/location?coords=%s"
     }
   ]
 }

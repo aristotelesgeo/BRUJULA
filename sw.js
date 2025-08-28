@@ -1,17 +1,17 @@
-const CACHE_NAME = 'brujula-digital-v1.2.0';
+const CACHE_NAME = 'brujula-digital-v1.2.1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-72x72.png',
-  '/icon-96x96.png',
-  '/icon-128x128.png',
-  '/icon-144x144.png',
-  '/icon-152x152.png',
-  '/icon-192x192.png',
-  '/icon-384x384.png',
-  '/icon-512x512.png',
-  '/screenshot-phone.png'
+  '/BRUJULA/',
+  '/BRUJULA/index.html',
+  '/BRUJULA/manifest.json',
+  '/BRUJULA/icon-72x72.png',
+  '/BRUJULA/icon-96x96.png',
+  '/BRUJULA/icon-128x128.png',
+  '/BRUJULA/icon-144x144.png',
+  '/BRUJULA/icon-152x152.png',
+  '/BRUJULA/icon-192x192.png',
+  '/BRUJULA/icon-384x384.png',
+  '/BRUJULA/icon-512x512.png',
+  '/BRUJULA/screenshot-phone.png'
 ];
 
 // Instalar el service worker inmediatamente
@@ -25,7 +25,7 @@ self.addEventListener('install', (event) => {
         return cache.addAll(urlsToCache).catch(err => {
           console.log('[SW] Error cacheando archivos:', err);
           // Cachear los archivos críticos al menos
-          return cache.addAll(['/', '/index.html', '/manifest.json']);
+          return cache.addAll(['/BRUJULA/', '/BRUJULA/index.html', '/BRUJULA/manifest.json']);
         });
       })
       .then(() => {
@@ -98,7 +98,7 @@ self.addEventListener('fetch', (event) => {
             console.log('[SW] Error de red:', error);
             // Si es la página principal y no hay red, servir página offline
             if (event.request.destination === 'document') {
-              return caches.match('/');
+              return caches.match('/BRUJULA/');
             }
             throw error;
           });
@@ -112,8 +112,8 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: 'La brújula está lista para usar',
-    icon: '/icon-192x192.png',
-    badge: '/icon-72x72.png',
+    icon: '/BRUJULA/icon-192x192.png',
+    badge: '/BRUJULA/icon-72x72.png',
     vibrate: [200, 100, 200],
     tag: 'brujula-notification',
     requireInteraction: false
@@ -130,7 +130,7 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   event.waitUntil(
-    clients.openWindow('/')
+    clients.openWindow('/BRUJULA/')
   );
 });
 
@@ -153,7 +153,7 @@ function syncCompassData() {
 
 // Manejar compartir ubicación
 self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('/share-location')) {
+  if (event.request.url.includes('/BRUJULA/share-location')) {
     event.respondWith(
       new Response('Ubicación compartida', {
         headers: { 'Content-Type': 'text/plain' }
