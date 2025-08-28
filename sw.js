@@ -1,4 +1,4 @@
-const CACHE_NAME = 'brujula-digital-v1.2.1';
+const CACHE_NAME = 'compass-digital-v1.3.0';
 const urlsToCache = [
   '/BRUJULA/',
   '/BRUJULA/index.html',
@@ -14,30 +14,30 @@ const urlsToCache = [
   '/BRUJULA/screenshot-phone.png'
 ];
 
-// Instalar el service worker inmediatamente
+// Install service worker immediately
 self.addEventListener('install', (event) => {
-  console.log('[SW] Instalando Service Worker...');
+  console.log('[SW] Installing Service Worker...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] Cache abierto:', CACHE_NAME);
+        console.log('[SW] Cache opened:', CACHE_NAME);
         return cache.addAll(urlsToCache).catch(err => {
-          console.log('[SW] Error cacheando archivos:', err);
-          // Cachear los archivos críticos al menos
+          console.log('[SW] Error caching files:', err);
+          // Cache critical files at minimum
           return cache.addAll(['/BRUJULA/', '/BRUJULA/index.html', '/BRUJULA/manifest.json']);
         });
       })
       .then(() => {
-        console.log('[SW] Archivos cacheados exitosamente');
-        return self.skipWaiting(); // Activa inmediatamente
+        console.log('[SW] Files cached successfully');
+        return self.skipWaiting(); // Activate immediately
       })
   );
 });
 
-// Activar y limpiar caches antiguos
+// Activate and clean old caches
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activando Service Worker...');
+  console.log('[SW] Activating Service Worker...');
   
   event.waitUntil(
     caches.keys()
@@ -45,22 +45,22 @@ self.addEventListener('activate', (event) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== CACHE_NAME) {
-              console.log('[SW] Eliminando cache antiguo:', cacheName);
+              console.log('[SW] Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('[SW] Service Worker activado');
-        return self.clients.claim(); // Toma control inmediatamente
+        console.log('[SW] Service Worker activated');
+        return self.clients.claim(); // Take control immediately
       })
   );
 });
 
-// Interceptar solicitudes de red con estrategia cache-first
+// Intercept network requests with cache-first strategy
 self.addEventListener('fetch', (event) => {
-  // Solo interceptar requests GET
+  // Only intercept GET requests
   if (event.request.method !== 'GET') {
     return;
   }
@@ -68,35 +68,35 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((cachedResponse) => {
-        // Si está en cache, devolverlo
+        // If cached, return it
         if (cachedResponse) {
-          console.log('[SW] Sirviendo desde cache:', event.request.url);
+          console.log('[SW] Serving from cache:', event.request.url);
           return cachedResponse;
         }
         
-        // Si no está en cache, intentar obtenerlo de la red
-        console.log('[SW] Obteniendo de la red:', event.request.url);
+        // If not cached, try to get from network
+        console.log('[SW] Fetching from network:', event.request.url);
         return fetch(event.request)
           .then((response) => {
-            // Verificar si recibimos una respuesta válida
+            // Check if we received a valid response
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
 
-            // Clonar la respuesta para cachearla
+            // Clone response to cache it
             const responseToCache = response.clone();
 
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
-                console.log('[SW] Archivo cacheado:', event.request.url);
+                console.log('[SW] File cached:', event.request.url);
               });
 
             return response;
           })
           .catch((error) => {
-            console.log('[SW] Error de red:', error);
-            // Si es la página principal y no hay red, servir página offline
+            console.log('[SW] Network error:', error);
+            // If main page and no network, serve offline page
             if (event.request.destination === 'document') {
               return caches.match('/BRUJULA/');
             }
@@ -106,27 +106,27 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// Manejar notificaciones push
+// Handle push notifications
 self.addEventListener('push', (event) => {
-  console.log('[SW] Push recibido');
+  console.log('[SW] Push received');
   
   const options = {
-    body: 'La brújula está lista para usar',
+    body: 'The compass is ready to use',
     icon: '/BRUJULA/icon-192x192.png',
     badge: '/BRUJULA/icon-72x72.png',
     vibrate: [200, 100, 200],
-    tag: 'brujula-notification',
+    tag: 'compass-notification',
     requireInteraction: false
   };
 
   event.waitUntil(
-    self.registration.showNotification('Brújula Digital', options)
+    self.registration.showNotification('Digital Compass', options)
   );
 });
 
-// Manejar clicks en notificaciones
+// Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
-  console.log('[SW] Click en notificación');
+  console.log('[SW] Notification click');
   event.notification.close();
 
   event.waitUntil(
@@ -134,7 +134,7 @@ self.addEventListener('notificationclick', (event) => {
   );
 });
 
-// Background Sync para funcionalidad offline
+// Background Sync for offline functionality
 self.addEventListener('sync', (event) => {
   console.log('[SW] Background sync:', event.tag);
   
@@ -144,22 +144,22 @@ self.addEventListener('sync', (event) => {
 });
 
 function syncCompassData() {
-  // Sincronizar datos de la brújula cuando vuelva la conexión
+  // Sync compass data when connection returns
   return Promise.resolve()
     .then(() => {
-      console.log('[SW] Datos de brújula sincronizados');
+      console.log('[SW] Compass data synchronized');
     });
 }
 
-// Manejar compartir ubicación
+// Handle location sharing
 self.addEventListener('fetch', (event) => {
   if (event.request.url.includes('/BRUJULA/share-location')) {
     event.respondWith(
-      new Response('Ubicación compartida', {
+      new Response('Location shared', {
         headers: { 'Content-Type': 'text/plain' }
       })
     );
   }
 });
 
-console.log('[SW] Service Worker cargado correctamente');
+console.log('[SW] Service Worker loaded successfully');

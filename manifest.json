@@ -1,8 +1,8 @@
 {
   "id": "/BRUJULA/",
-  "name": "Brújula Digital",
-  "short_name": "Brújula",
-  "description": "Brújula digital con linterna integrada para dispositivos móviles. Navegación precisa y herramientas útiles para outdoor.",
+  "name": "Compass Digital",
+  "short_name": "Compass",
+  "description": "Digital compass with integrated flashlight for mobile devices. Precise navigation and useful tools for outdoor activities.",
   "start_url": "/BRUJULA/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
@@ -86,9 +86,9 @@
   ],
   "shortcuts": [
     {
-      "name": "Abrir Brújula",
-      "short_name": "Brújula",
-      "description": "Abrir la brújula directamente",
+      "name": "Open Compass",
+      "short_name": "Compass",
+      "description": "Open the compass directly",
       "url": "/BRUJULA/",
       "icons": [
         {
@@ -98,9 +98,9 @@
       ]
     },
     {
-      "name": "Linterna Rápida",
-      "short_name": "Linterna",
-      "description": "Activar linterna rápidamente",
+      "name": "Quick Flashlight",
+      "short_name": "Flashlight",
+      "description": "Activate flashlight quickly",
       "url": "/BRUJULA/?flashlight=on",
       "icons": [
         {
